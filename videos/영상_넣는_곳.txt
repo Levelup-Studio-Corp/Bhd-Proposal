@@ -1,0 +1,1 @@
+영상 4종(mp4, H.264)을 이 폴더에 넣고 index.html의 VIDEOS 목록 src에 "videos/파일이름.mp4" 형식으로 적으십시오.

@@ -1,0 +1,1 @@
+리소스 이미지 6장을 이 폴더에 넣고 index.html의 WORKS 목록 src에 "images/파일이름.jpg" 형식으로 적으십시오.

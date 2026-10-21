@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>무협 IP 콜라보 제안서</title>
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+/* 로컬 폰트 — HTML 옆 fonts 폴더에서 읽습니다. 파일이 없으면 다음 서체로 넘어갑니다. */
+@font-face{font-family:"NotoSerifKR Local";src:url("fonts/NotoSerifKR-Regular.woff") format("woff");font-weight:400;font-display:swap}
+@font-face{font-family:"NotoSerifKR Local";src:url("fonts/NotoSerifKR-Black.woff") format("woff");font-weight:700 900;font-display:swap}
+@font-face{font-family:"SongMyung Local";src:local("Song Myung"),local("SongMyung-Regular"),url("fonts/SongMyung-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"GowunDodum Local";src:local("Gowun Dodum"),local("GowunDodum-Regular"),url("fonts/GowunDodum-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"PlexMono Local";src:local("IBM Plex Mono"),local("IBMPlexMono-Regular"),url("fonts/IBMPlexMono-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+/* Layout: 세로 두루마리. 각 장(章)은 좌측 여백에 큰 한자 서수, 우측에 본문. 모바일에서는 서수가 본문 위로 올라감. */
+:root{
+  --paper:#EBEEE8; --paper-2:#E1E5DD; --ink:#171C1B; --ink-2:#4A5452; --line:#C5CCC5;
+  --jade:#2C6A62; --jade-soft:#D3E2DC; --seal:#A8281F; --hatch:rgba(23,28,27,.08);
+  --f-display:"SongMyung Local","Song Myung","NotoSerifKR Local","Noto Serif KR",serif;
+  --f-hanja:"NotoSerifKR Local","Noto Serif KR","Songti SC",serif;
+  --f-body:"GowunDodum Local","Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"PlexMono Local","IBM Plex Mono",ui-monospace,"Consolas",monospace;
+  --s-1:.8125rem; --s0:1rem; --s1:1.1875rem; --s2:1.5rem; --s3:2.125rem;
+}
+
+*{box-sizing:border-box}
+html{scroll-snap-type:y proximity;scroll-padding-top:56px}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:var(--s0);line-height:1.75;word-break:keep-all;overflow-wrap:break-word;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0;line-height:1.3}
+p{margin:0;text-wrap:pretty}
+.wrap{max-width:1080px;margin:0 auto}
+.label{font-family:var(--f-mono);font-size:var(--s-1);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--jade);outline-offset:3px}
+.ip{color:var(--jade)}
+
+/* 상단 바 */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--paper);border-bottom:1px solid var(--line);
+  margin-left:calc(-1*max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1*max(16px,env(safe-area-inset-right,0px)));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.bar-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:16px;padding-block:10px}
+.bar-title{font-family:var(--f-display);font-size:var(--s1);white-space:nowrap}
+.toc{display:flex;gap:2px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none}
+.toc::-webkit-scrollbar{display:none}
+.toc a{font-family:var(--f-hanja);font-size:var(--s-1);color:var(--ink-2);text-decoration:none;padding:4px 10px;border-radius:2px;white-space:nowrap}
+.toc a.on{color:var(--paper);background:var(--ink)}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;background:var(--jade);width:0}
+
+/* 히어로 */
+.hero{position:relative;min-height:calc(100svh - 56px);padding-block:96px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:center;border-bottom:1px solid var(--line);scroll-snap-align:start}
+#sansu{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.hero .label{display:block;margin-bottom:20px}
+.hero h1{font-size:clamp(2.25rem,6.4vw,4.25rem);letter-spacing:-.01em}
+.hero .sub{margin-top:18px;max-width:34em;color:var(--ink-2);font-size:var(--s1)}
+.meta{display:flex;flex-wrap:wrap;gap:8px 32px;margin-top:28px}
+.meta div{display:flex;flex-direction:column}
+.vert{writing-mode:vertical-rl;font-family:var(--f-hanja);font-weight:900;font-size:clamp(2.5rem,6vw,4rem);line-height:1.05;letter-spacing:.1em;opacity:.9;animation:brush 1.6s ease-out both}
+@keyframes brush{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+
+/* 장(章) */
+.juan{display:grid;grid-template-columns:120px minmax(0,1fr);gap:48px;min-height:calc(100svh - 56px);padding-block:120px;align-content:center;border-bottom:1px solid var(--line);scroll-snap-align:start}
+.ord{font-family:var(--f-hanja);font-weight:900;font-size:4.5rem;line-height:1;color:var(--jade);position:sticky;top:90px;align-self:start}
+.ord small{display:block;font-family:var(--f-mono);font-weight:400;font-size:var(--s-1);letter-spacing:.12em;color:var(--ink-2);margin-top:10px}
+.juan h2{font-size:var(--s3);margin-bottom:14px}
+.lead{color:var(--ink-2);max-width:40em;margin-bottom:48px}
+.body{min-width:0;display:flex;flex-direction:column}
+.prose{max-width:40em;display:flex;flex-direction:column;gap:14px}
+
+/* 미디어 공통 */
+.frame{position:relative;aspect-ratio:16/9;max-width:100%;background:var(--paper-2);border:1px solid var(--line);overflow:hidden;display:block;width:100%}
+.frame img,.frame video{width:100%;height:100%;object-fit:cover;display:block}
+.ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:12px;
+  background:repeating-linear-gradient(135deg,var(--hatch) 0 1px,transparent 1px 10px);color:var(--ink-2)}
+.ph .h{font-family:var(--f-hanja);font-weight:900;font-size:2.25rem;color:var(--ink);opacity:.35;line-height:1}
+.ph small{font-family:var(--f-mono);font-size:.6875rem;letter-spacing:.08em}
+.play{position:absolute;left:16px;bottom:16px;width:52px;height:52px;border-radius:50%;background:var(--ink);display:grid;place-items:center}
+.play::after{content:"";border-left:16px solid var(--paper);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+
+/* 게임 씬 영상 */
+.stage{border:1px solid var(--ink)}
+.stage .frame{border:0}
+.stage-cap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:12px 16px;border-top:1px solid var(--ink)}
+.stage-cap b{font-weight:400;font-family:var(--f-display);font-size:var(--s1)}
+.clips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}
+.clip{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:6px;min-width:0}
+.clip .frame{transition:border-color .2s}
+.clip .ph .h{font-size:1.5rem}
+.clip .ph small,.clip .ph span:not(.h){display:none}
+.clip .no{font-family:var(--f-mono);font-size:.6875rem;color:var(--ink-2);letter-spacing:.08em}
+.clip .t{font-size:var(--s-1);line-height:1.5}
+.clip[aria-pressed="true"] .frame{border:2px solid var(--jade)}
+.clip[aria-pressed="true"] .no{color:var(--jade)}
+.clip:hover .frame{border-color:var(--jade)}
+.clip:focus-visible{outline:2px solid var(--jade);outline-offset:4px}
+
+/* 갤러리 */
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 24px}
+.tile{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tile:focus-visible{outline:2px solid var(--jade);outline-offset:4px}
+.tile .frame{aspect-ratio:4/3;transition:border-color .2s}
+.tile:hover .frame{border-color:var(--jade)}
+.tile .t{font-family:var(--f-display);font-size:var(--s0)}
+.tag{font-family:var(--f-mono);font-size:.6875rem;letter-spacing:.08em;color:var(--jade)}
+
+/* 협업 방식 */
+.models{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:2px solid var(--ink)}
+.model{padding:24px 24px 8px 0;display:flex;flex-direction:column;gap:8px}
+.model+.model{padding-left:24px;border-left:1px solid var(--line)}
+.model .h{font-family:var(--f-hanja);font-weight:900;font-size:2.5rem;color:var(--jade);line-height:1}
+.model h3{font-size:var(--s2)}
+.model p{color:var(--ink-2);max-width:26em}
+
+/* 맺음 */
+.close{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:40px;align-items:end}
+.contact{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 16px;align-items:center;margin-top:24px;max-width:36em}
+.contact span{color:var(--ink-2);font-size:var(--s-1)}
+.contact code{font-family:var(--f-mono);user-select:all;overflow-wrap:anywhere}
+.contact button{border:1px solid var(--line);background:none;font-size:var(--s-1);padding:2px 10px;border-radius:2px}
+.marks{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.marks img{height:64px;width:auto;max-width:220px;object-fit:contain;display:block}
+.mark-sep{width:1px;height:44px;background:var(--line)}
+.mark-ph{display:inline-flex;align-items:center;justify-content:center;height:64px;padding:0 14px;border:1px dashed var(--ink-2);color:var(--ink-2);font-family:var(--f-mono);font-size:.6875rem;
+  background:repeating-linear-gradient(135deg,var(--hatch) 0 1px,transparent 1px 10px)}
+footer{padding-block:32px 48px;color:var(--ink-2);font-size:var(--s-1)}
+
+/* 라이트박스 */
+.lb{position:fixed;inset:0;z-index:30;background:rgba(10,13,12,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  padding:calc(20px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lb .frame{max-width:1000px;width:100%;aspect-ratio:16/9;background:#161D1B;border-color:#2A3532}
+.lb .frame img{object-fit:contain}
+.lb .cap{color:#E3E8E3;max-width:1000px;width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.lb .cap span{color:#9AA6A2;font-size:var(--s-1)}
+.lb-nav{display:flex;gap:8px}
+.lb-nav button{background:none;border:1px solid #4A5452;color:#E3E8E3;padding:6px 14px;border-radius:2px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:8px 16px;font-size:var(--s-1);border-radius:2px;z-index:40}
+
+@media (max-width:760px){
+  .juan{grid-template-columns:minmax(0,1fr);gap:16px;min-height:0;padding-block:80px}
+  .ord{position:static;font-size:3rem;display:flex;align-items:baseline;gap:12px}
+  .ord small{margin:0}
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .vert{writing-mode:horizontal-tb;font-size:2rem;letter-spacing:.3em;order:-1}
+  .gallery{grid-template-columns:minmax(0,1fr)}
+  .hero{min-height:0;padding-block:64px}
+  .models{grid-template-columns:minmax(0,1fr)}
+  .model,.model+.model{padding:20px 0;border-left:0}
+  .model+.model{border-top:1px solid var(--line)}
+  .close{grid-template-columns:minmax(0,1fr)}
+  .bar-title{display:none}
+  .bk{display:none}
+}
+@media (prefers-reduced-motion:reduce){.vert{animation:none}}
+@media print{.bar,.toast,.lb{display:none!important}.ord{position:static}.juan{break-inside:avoid-page}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="bar-in">
+    <span class="bar-title" data-studio>LevelUp Studio</span>
+    <nav class="toc" id="toc" aria-label="목차">
+      <a href="#seo">序 취지</a><a href="#scene">一 게임 씬</a><a href="#works">二 리소스</a><a href="#model">三 협업</a><a href="#end">結 맺음</a>
+    </nav>
+  </div>
+  <div class="progress" id="progress"></div>
+</div>
+
+<main class="wrap">
+
+<header class="hero">
+  <canvas id="sansu" aria-hidden="true"></canvas>
+  <div>
+    <span class="label">IP 콜라보 게임 제작 제안 · <span id="docDate">2026.10</span></span>
+    <h1><span class="ip">원작</span>의 무림을<br>게임으로 펼치고 싶습니다</h1>
+    <p class="sub">귀사의 작품과 함께 새로운 무협 게임을 만들고자 제안드립니다.<br class="bk">저희가 현재 개발 중인 게임의 장면과 리소스로 제작 방향을 먼저 보여드립니다.</p>
+  </div>
+  <div class="vert" aria-hidden="true">江湖同行</div>
+</header>
+
+<!-- 序 -->
+<section class="juan" id="seo">
+  <div class="ord">序<small>PURPOSE</small></div>
+  <div class="body">
+    <h2>제안 취지</h2>
+    <p class="lead">원작 독자가 게임을 켰을 때 "내가 보던 그 무림이다"라고 느끼게 만드는 것.<br class="bk">저희가 IP 게임에서 가장 중요하게 여기는 기준입니다.</p>
+    <div class="prose">
+      <p>귀사의 작품은 인물마다 고유한 무공과 싸우는 방식이 있고, 그 대결이 이야기를 이끌어 가는 작품입니다. 이런 작품을 게임으로 옮길 때는 원작 속 대결의 긴장감과 인물의 개성을 플레이로 체감하게 하는 것이 가장 중요하다고 봅니다.</p>
+      <p>이 문서는 특정 기획안이 아닙니다. 저희가 어떤 장면과 리소스를 만들 수 있는지 보여드리는 자리입니다. 구체적인 게임 콘셉트는 귀사와 원작에 대한 이해를 맞춘 뒤 함께 정하고자 합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 一 -->
+<section class="juan" id="scene">
+  <div class="ord">一<small>IN-GAME</small></div>
+  <div class="body">
+    <h2>게임 씬</h2>
+    <p class="lead">현재 자체적으로 작업 중인 게임 씬의 예시입니다.<br class="bk">저희가 만들고자 하는 게임의 방향성을 엿보실 수 있습니다.</p>
+    <div class="stage">
+      <div class="frame" id="stageFrame"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 二 -->
+<section class="juan" id="works">
+  <div class="ord">二<small>RESOURCES</small></div>
+  <div class="body">
+    <h2>제작 리소스</h2>
+    <p class="lead">게임 씬에 사용한 건물 리소스입니다.<br class="bk">이미지를 누르면 크게 보실 수 있습니다.</p>
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
+<!-- 三 -->
+<section class="juan" id="model">
+  <div class="ord">三<small>PARTNERSHIP</small></div>
+  <div class="body">
+    <h2>협업 방식</h2>
+    <p class="lead">아래 두 가지 방식을 제안드립니다.<br class="bk">세부 조건은 협의를 통해 정하고자 합니다.</p>
+    <div class="models">
+      <div class="model"><span class="h">許</span><h3>라이선스</h3><p>원작 IP를 기반으로 신규 게임을 개발합니다.</p></div>
+      <div class="model"><span class="h">連</span><h3>콘텐츠 연동</h3><p>개발 중인 게임에 원작 콜라보 콘텐츠를 더합니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 結 -->
+<section class="juan" id="end">
+  <div class="ord">結<small>CLOSING</small></div>
+  <div class="body">
+    <div class="close">
+      <div>
+        <h2>강호에서 함께 걷기를 청합니다</h2>
+        <p class="lead" style="margin-top:12px">귀사의 작품과 함께할 수 있다면<br class="bk">원작에 누가 되지 않는 게임으로 보답하겠습니다.</p>
+        <div class="contact">
+          <span>담당</span><b style="font-weight:400">대표 이의준</b><span></span>
+          <span>메일</span><code id="mail">manager@levelupdevs.com</code><button data-copy="mail">복사</button>
+          <span>전화</span><code id="tel">010-7303-3923</code><button data-copy="tel">복사</button>
+        </div>
+      </div>
+      <div class="marks">
+        <img src="images/CI_light.png" alt="LevelUp Studio" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'mark-ph',textContent:'images/CI_light.png'}))">
+        <span class="mark-sep" aria-hidden="true"></span>
+        <img src="images/COD_Logo_Light.png" alt="C.O.D." onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'mark-ph',textContent:'images/COD_Logo_Light.png'}))">
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© <span data-studio>LevelUp Studio</span>. 본 문서에 수록된 영상과 리소스는 <span data-studio>LevelUp Studio</span>의 자산이며 협의 목적 외 사용을 금합니다.</footer>
+</main>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="리소스 크게 보기">
+  <div class="frame" id="lbFrame"></div>
+  <div class="cap"><div><b id="lbTitle" style="font-weight:400"></b><br><span id="lbDesc"></span></div>
+    <div class="lb-nav"><button id="lbPrev">이전</button><button id="lbNext">다음</button><button id="lbClose">닫기</button></div></div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   설정 — 수신처별로 이 블록만 바꿉니다.
+   배포용 파일에는 해당 수신처의 값만 남기십시오.
+   ════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  studio: "LevelUp Studio",
+  date:   "2026.10"
+};
+
+/* 게임 씬 영상 — HTML 옆 videos 폴더 기준 */
+const VIDEO = {title:"게임 씬", src:"videos/BHD.mp4", poster:"", link:""};
+
+/* 제작 리소스 — HTML 옆 images 폴더 기준 */
+const WORKS = [
+  {kind:"건물", title:"Building 00", src:"images/Resource_Building00.png"},
+  {kind:"건물", title:"Building 01", src:"images/Resource_Building01.png"},
+  {kind:"건물", title:"Building 02", src:"images/Resource_Building02.png"},
+  {kind:"건물", title:"Building 03", src:"images/Resource_Building03.png"}
+];
+
+/* ════ 아래는 수정하지 않아도 됩니다 ════ */
+(function(){
+  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  $$('[data-studio]').forEach(e=>e.textContent=CONFIG.studio);
+  $('#docDate').textContent=CONFIG.date;
+
+  function ph(h,label){return `<div class="ph"><span class="h">${h}</span><span>${esc(label)}</span><small>파일 경로를 src에 입력</small></div>`;}
+  function video(o,controls){
+    if(o.src) return `<video src="${esc(o.src)}" ${o.poster?`poster="${esc(o.poster)}"`:''} ${controls?'controls':''} preload="metadata" playsinline onerror="this.outerHTML=this.dataset.ph" data-ph="${esc(ph('影',o.src))}"></video>`;
+    const base=o.poster?`<img src="${esc(o.poster)}" alt="">`:ph('影','영상 자리');
+    if(controls&&o.link) return base+`<a class="play" href="${esc(o.link)}" target="_blank" rel="noopener" aria-label="${esc(o.title)} 새 창에서 보기"></a>`;
+    return base+(controls?'<span class="play" aria-hidden="true"></span>':'');
+  }
+  function image(o){return o.src?`<img src="${esc(o.src)}" alt="${esc(o.title)}" loading="lazy" onerror="this.outerHTML=this.dataset.ph" data-ph="${esc(ph('樓',o.src))}">`:ph('樓','이미지 자리');}
+
+  /* 게임 씬 */
+  $('#stageFrame').innerHTML=video(VIDEO,true);
+
+  /* 리소스 */
+  $('#gallery').innerHTML=WORKS.map((w,i)=>`<button class="tile" data-i="${i}"><span class="frame">${image(w)}</span><span class="tag">${esc(w.kind)}</span><span class="t">${esc(w.title)}</span></button>`).join('');
+  let li=0,lastFocus=null;
+  function showLb(){const w=WORKS[li];$('#lbFrame').innerHTML=image(w);$('#lbTitle').textContent=w.title;$('#lbDesc').textContent=`${w.kind} · ${li+1}/${WORKS.length}`;}
+  function openLb(i){li=i;lastFocus=document.activeElement;showLb();$('#lb').hidden=false;$('#lbClose').focus();}
+  function closeLb(){$('#lb').hidden=true;lastFocus&&lastFocus.focus();}
+  $$('#gallery .tile').forEach(t=>t.onclick=()=>openLb(+t.dataset.i));
+  $('#lbClose').onclick=closeLb;
+  $('#lbPrev').onclick=()=>{li=(li-1+WORKS.length)%WORKS.length;showLb();};
+  $('#lbNext').onclick=()=>{li=(li+1)%WORKS.length;showLb();};
+  $('#lb').addEventListener('click',e=>{if(e.target.id==='lb')closeLb();});
+  addEventListener('keydown',e=>{if($('#lb').hidden)return;if(e.key==='Escape')closeLb();if(e.key==='ArrowLeft')$('#lbPrev').click();if(e.key==='ArrowRight')$('#lbNext').click();});
+
+  /* 산수 배경 */
+  const cv=$('#sansu'),ctx=cv.getContext('2d');let W=0,H=0,t=0,layers=[];
+  function ridge(seed,base,amp,f){const p=[];for(let x=0;x<=W;x+=6){const n=Math.sin(x*f+seed)*.6+Math.sin(x*f*2.3+seed*1.7)*.3+Math.sin(x*f*5.1+seed*.4)*.1;p.push([x,base-n*amp]);}return p;}
+  function size(){const r=cv.getBoundingClientRect(),d=devicePixelRatio||1;W=r.width;H=r.height;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);
+    layers=[ridge(1.3,H*.55,H*.18,.006),ridge(4.1,H*.68,H*.14,.009),ridge(7.7,H*.82,H*.1,.013)];}
+  function draw(){ctx.clearRect(0,0,W,H);const ink=css('--ink'),paper=css('--paper');
+    layers.forEach((p,i)=>{ctx.beginPath();ctx.moveTo(0,H);p.forEach(q=>ctx.lineTo(q[0],q[1]));ctx.lineTo(W,H);ctx.closePath();
+      const g=ctx.createLinearGradient(0,H*.3,0,H);g.addColorStop(0,ink);g.addColorStop(1,'transparent');ctx.globalAlpha=[.06,.09,.12][i];ctx.fillStyle=g;ctx.fill();});
+    for(let i=0;i<3;i++){const y=H*(.58+i*.11),x=((t*.15*(i+1))+i*300)%(W+400)-200;const g=ctx.createRadialGradient(x,y,0,x,y,220);
+      g.addColorStop(0,paper);g.addColorStop(1,'transparent');ctx.globalAlpha=.55;ctx.fillStyle=g;ctx.fillRect(x-220,y-60,440,120);}
+    ctx.globalAlpha=1;}
+  function loop(){t++;draw();requestAnimationFrame(loop);}
+  size();draw();if(!reduce)loop();
+  addEventListener('resize',()=>{size();draw();});
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+  new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+  /* 목차 · 진행률 */
+  const secs=$$('.juan'),links=$$('#toc a');
+  function onScroll(){const h=document.documentElement;$('#progress').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100||0)+'%';
+    let c=-1;secs.forEach((s,i)=>{if(s.getBoundingClientRect().top<140)c=i;});links.forEach((a,i)=>a.classList.toggle('on',i===c));}
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  /* 복사 */
+  function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2000);}
+  $$('[data-copy]').forEach(b=>b.onclick=()=>{const el=document.getElementById(b.dataset.copy),txt=el.textContent.trim();
+    const sel=()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);toast('선택했습니다. 직접 복사해 주세요');};
+    try{navigator.clipboard.writeText(txt).then(()=>toast('복사했습니다'),sel);}catch(e){sel();}});
+})();
+</script>
+</body>
+</html>
